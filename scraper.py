@@ -40,7 +40,7 @@ def main():
     
     conn = sqlite3.connect("data.sqlite")
     cursor = conn.cursor()
-    cursor.execute("""CREATE TABLE week (week text)""")
+#     cursor.execute("""CREATE TABLE week (week text)""")
     
 #     data = [div]
  
