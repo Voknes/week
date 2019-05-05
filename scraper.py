@@ -40,13 +40,14 @@ def main():
 
     d = div.split('  ')[0].split('Сегодня ')[1]
     w = div.split('Идет ')[1]
+    data = [(w, d,)]
     
     conn = sqlite3.connect("data.sqlite")
     cursor = conn.cursor()
     
-    cursor.execute("""DROP TABLE week""")
-    cursor.execute("""CREATE TABLE weeks (week text, date text)""")
-    data = [(w, d,)]
+    # cursor.execute("""DROP TABLE week""")
+    # cursor.execute("""CREATE TABLE weeks (week text, date text)""")
+
     sql = "DELETE FROM weeks WHERE week != ''"
     cursor.execute(sql)
     conn.commit()
