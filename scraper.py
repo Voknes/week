@@ -41,8 +41,12 @@ def main():
     conn = sqlite3.connect("data.sqlite")
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE week (week text)""")
-    cursor.execute("""INSERT INTO week VALUES (div)""")
+    
+#     data = [div]
+ 
+    cursor.executemany("INSERT INTO week VALUES (?)", div)
     conn.commit()
+    
     sql = "SELECT * FROM week"
     cursor.execute(sql)
     print(cursor.fetchall())
