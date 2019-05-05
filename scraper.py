@@ -22,7 +22,7 @@
 # All that matters is that your final data is written to an SQLite database
 # called "data.sqlite" in the current working directory which has at least a table
 # called "data".
-import scraperwiki
+import sqlite3
 from bs4 import BeautifulSoup
 import requests
 
@@ -38,11 +38,14 @@ def main():
 
     div = soup.find('em').text.strip()
     
-    scraperwiki.sqlite.save(unique_keys=['week'], data={"week": div})
-    
-    scraperwiki.sql.select("* from data")
-    
-    print(div)
+    conn = sqlite3.connect("data.sqlite")
+    cursor = conn.cursor()
+    cursor.execute("""CREATE TABLE week (week text)""")
+    cursor.execute("""INSERT INTO week VALUES (div)""")
+    conn.commit()
+    sql = "SELECT * FROM week"
+    cursor.execute(sql)
+    print(cursor.fetchall())
 
 if __name__ == '__main__':
     main()
