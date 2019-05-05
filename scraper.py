@@ -42,9 +42,9 @@ def main():
     cursor = conn.cursor()
 #     cursor.execute("""CREATE TABLE week (week text)""")
     
-#     data = [div]
+    data = str(div)
  
-    cursor.executemany("INSERT INTO week VALUES (?)", div)
+    cursor.executemany("INSERT INTO week VALUES (?)", data)
     conn.commit()
     
     sql = "SELECT * FROM week"
