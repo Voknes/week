@@ -22,6 +22,7 @@
 # All that matters is that your final data is written to an SQLite database
 # called "data.sqlite" in the current working directory which has at least a table
 # called "data".
+import scraperwiki
 from bs4 import BeautifulSoup
 import requests
 
@@ -36,10 +37,11 @@ def main():
     soup = BeautifulSoup(html, 'lxml')
 
     div = soup.find('em').text.strip()
-    f = open('out.txt', 'w')
-    f.write( str(div) + '\n' )
-    f.close()
-
+    
+    scraperwiki.sqlite.save(unique_keys=['week'], data={"week": div})
+    
+    scraperwiki.sql.select("* from data")
+    
     print(div)
 
 if __name__ == '__main__':
