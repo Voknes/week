@@ -22,3 +22,25 @@
 # All that matters is that your final data is written to an SQLite database
 # called "data.sqlite" in the current working directory which has at least a table
 # called "data".
+from bs4 import BeautifulSoup
+import requests
+
+def get_html(url):
+    r = requests.get(url)
+    return r.text
+
+
+def main():
+    url = 'https://ciu.nstu.ru/student/time_table_view?idgroup=31173&fk_timetable=37954'
+    html = get_html(url)
+    soup = BeautifulSoup(html, 'lxml')
+
+    div = soup.find('em').text.strip()
+    f = open('out.txt', 'w')
+    f.write( str(div) + '\n' )
+    f.close()
+
+    print(div)
+
+if __name__ == '__main__':
+    main()
