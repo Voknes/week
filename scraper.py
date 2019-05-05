@@ -37,14 +37,19 @@ def main():
     soup = BeautifulSoup(html, 'lxml')
 
     div = soup.find('em').text.strip()
+
+
     
     conn = sqlite3.connect("data.sqlite")
     cursor = conn.cursor()
-#     cursor.execute("""CREATE TABLE week (week text)""")
+    # cursor.execute("""CREATE TABLE week (week text)""")
     
-    data = str(div)
- 
-    cursor.executemany("INSERT INTO week VALUES (?)", data)
+    data = [(div,)]
+    sql = "DELETE FROM week WHERE week != ''"
+    cursor.execute(sql)
+    conn.commit()
+    
+    cursor.execute("INSERT INTO week (week) VALUES (?)", data[0])
     conn.commit()
     
     sql = "SELECT * FROM week"
