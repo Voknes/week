@@ -38,21 +38,23 @@ def main():
 
     div = soup.find('em').text.strip()
 
-
+    d = div.split('  ')[0].split('Сегодня ')[1]
+    w = div.split('Идет ')[1]
     
     conn = sqlite3.connect("data.sqlite")
     cursor = conn.cursor()
-    # cursor.execute("""CREATE TABLE week (week text)""")
     
-    data = [(div,)]
-    sql = "DELETE FROM week WHERE week != ''"
+    cursor.execute("""DROP TABLE week""")
+    cursor.execute("""CREATE TABLE weeks (week text, date text)""")
+    data = [(w, d,)]
+    sql = "DELETE FROM weeks WHERE week != ''"
     cursor.execute(sql)
     conn.commit()
     
-    cursor.execute("INSERT INTO week (week) VALUES (?)", data[0])
+    cursor.execute("INSERT INTO weeks (week, date) VALUES (?, ?)", data[0])
     conn.commit()
     
-    sql = "SELECT * FROM week"
+    sql = "SELECT * FROM weeks"
     cursor.execute(sql)
     print(cursor.fetchall())
 
